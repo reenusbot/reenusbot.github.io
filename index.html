@@ -10,240 +10,124 @@
   <style>
     :root {
       color-scheme: dark;
-      --bg-blur: rgba(0, 0, 0, 0.45);
-      --bg-solid: rgba(0, 0, 0, 0.8);
-      --highlight: #8aff66;
-      --secondary: rgba(255, 255, 255, 0.78);
-      --border: rgba(255, 255, 255, 0.32);
       font-family: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
       letter-spacing: 0.02em;
     }
 
-    * {
+    *, *::before, *::after {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     body {
+      margin: 0;
       min-height: 100vh;
-      background: #000 url("portrait.jpg") center center / cover no-repeat fixed;
-      color: #f7f7f7;
-      position: relative;
+      background: #000;
+      color: #fff;
       overflow: hidden;
     }
 
-    body::before {
-      content: "";
-      position: absolute;
+    .bg,
+    .overlay {
+      position: fixed;
       inset: 0;
-      background: linear-gradient(130deg, rgba(0, 0, 0, 0.9) 20%, rgba(0, 0, 0, 0.25) 60%, rgba(0, 0, 0, 0.9) 100%);
-      backdrop-filter: blur(6px);
       z-index: 0;
+    }
+
+    .bg {
+      background: url("portrait.jpg") center center / cover no-repeat;
+      filter: blur(8px) saturate(0.75);
+      transform: scale(1.04);
+    }
+
+    .overlay {
+      background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0.9) 100%);
+      backdrop-filter: blur(2px);
     }
 
     main {
       position: relative;
       z-index: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
       min-height: 100vh;
-      padding: clamp(1rem, 4vw, 2.5rem) clamp(1.5rem, 6vw, 4rem);
-      gap: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1.5rem, 5vw, 3rem);
     }
 
     nav {
+      width: min(1400px, 100%);
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 1rem;
       text-transform: uppercase;
-      font-size: 0.9rem;
-      font-weight: 500;
+      font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+      letter-spacing: 0.18em;
+      gap: 2rem;
     }
 
-    nav span,
+    .nav-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .nav-group.right {
+      align-items: flex-end;
+    }
+
     nav a {
-      color: var(--secondary);
+      color: #050505;
       text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s ease;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.85);
+      transition: color 0.2s ease, text-shadow 0.2s ease;
     }
 
     nav a:hover,
     nav a:focus-visible {
-      border-bottom-color: #fff;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: clamp(1.2rem, 3vw, 2.5rem);
-      align-items: end;
-    }
-
-    .hero h1 {
-      font-size: clamp(3rem, 9vw, 6rem);
-      line-height: 0.95;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .hero p {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      line-height: 1.6;
-      max-width: 38ch;
-      background: var(--bg-blur);
-      padding: 1.25rem;
-      border: 1px solid var(--border);
-      backdrop-filter: blur(8px);
-    }
-
-    .hero .tag {
-      display: inline-block;
-      font-size: 0.85rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin-bottom: 0.75rem;
-      color: var(--secondary);
-    }
-
-    .hero p strong {
-      color: var(--highlight);
-      font-weight: 600;
-    }
-
-    .meta-table {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1rem;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 1.5rem 0;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      letter-spacing: 0.06em;
-    }
-
-    .meta-table div {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-
-    .meta-table span:last-child {
-      font-size: 1.05rem;
-      letter-spacing: 0.02em;
       color: #fff;
+      text-shadow: none;
     }
 
-    .links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      list-style: none;
-      text-transform: uppercase;
-      font-size: 0.9rem;
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
     }
 
-    .links a {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.6rem 1rem;
-      border: 1px solid var(--border);
-      background: var(--bg-blur);
-      color: #fff;
-      text-decoration: none;
-      transition: border-color 0.2s ease, transform 0.2s ease;
-    }
-
-    .links a:hover,
-    .links a:focus-visible {
-      border-color: var(--highlight);
-      transform: translateY(-2px);
-    }
-
-    footer {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      color: var(--secondary);
-    }
-
-    footer .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    footer .status::before {
-      content: "●";
-      font-size: 0.6rem;
-      color: var(--highlight);
-    }
-
-    @media (max-width: 640px) {
+    @media (max-width: 650px) {
       nav {
         flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.5rem;
       }
 
-      .hero h1 {
-        font-size: 2.8rem;
+      .nav-group.right {
+        align-items: center;
       }
     }
   </style>
 </head>
 <body>
+  <div class="bg" aria-hidden="true"></div>
+  <div class="overlay" aria-hidden="true"></div>
   <main>
-    <nav>
-      <span>Rene Lubov — personal index</span>
-      <span><a href="mailto:hi@renelubov.com">hi@renelubov.com</a></span>
+    <h1 class="sr-only">Rene Lubov</h1>
+    <nav aria-label="Primary">
+      <div class="nav-group left">
+        <a href="https://writing.renelubov.com" target="_blank" rel="noopener">• blog</a>
+        <a href="https://twitter.com/renelubov" target="_blank" rel="noopener">• twitter</a>
+      </div>
+      <div class="nav-group right">
+        <a href="https://github.com/renelubov" target="_blank" rel="noopener">* github</a>
+        <a href="https://open.spotify.com/user/renelubov" target="_blank" rel="noopener">* music</a>
+      </div>
     </nav>
-
-    <section class="hero" aria-labelledby="intro">
-      <div>
-        <p class="tag">CURRENT WORK</p>
-        <h1 id="intro">Proto-forward technologist building bold tools + communities.</h1>
-      </div>
-      <p>
-        I prototype brands, systems, and internet-native products for people who like their infrastructure lean and their aesthetics loud. <strong>Hands-on, collaborative, and allergic to bloat.</strong>
-      </p>
-    </section>
-
-    <section class="meta-table" aria-label="details">
-      <div>
-        <span>Base</span>
-        <span>Berlin → Everywhere</span>
-      </div>
-      <div>
-        <span>Focus</span>
-        <span>Creative tech, systems design, studio builds</span>
-      </div>
-      <div>
-        <span>Currently</span>
-        <span>Prototyping independent media + DIY fashion tech</span>
-      </div>
-    </section>
-
-    <section aria-labelledby="navigate">
-      <h2 id="navigate" style="position:absolute;left:-9999px;">Primary links</h2>
-      <ul class="links">
-        <li><a href="https://github.com/renelubov" target="_blank" rel="noopener">GitHub ↗</a></li>
-        <li><a href="https://www.linkedin.com/in/renelubov" target="_blank" rel="noopener">LinkedIn ↗</a></li>
-        <li><a href="https://writing.renelubov.com" target="_blank" rel="noopener">Writing ↗</a></li>
-        <li><a href="https://proto-types.ch/" target="_blank" rel="noopener">Proto inspiration ↗</a></li>
-      </ul>
-    </section>
-
-    <footer>
-      <div class="status">Available for select collaborations Q2 2026</div>
-      <div>Signal / Telegram @renelubov — Code + content living at github.com/renelubov</div>
-    </footer>
   </main>
 </body>
 </html>
