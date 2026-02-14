@@ -46,12 +46,12 @@
     }
 
     .bg {
-      filter: blur(6px) saturate(0.85);
-      transform: scale(1.02);
+      filter: none;
+      transform: scale(1.0);
     }
 
     .overlay {
-      background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 35%, rgba(0, 0, 0, 0.7) 75%, rgba(0, 0, 0, 0.95) 100%);
+      background: radial-gradient(circle at center, rgba(0, 0, 0, 0.05) 25%, rgba(0, 0, 0, 0.65) 75%, rgba(0, 0, 0, 0.92) 100%);
       pointer-events: none;
     }
 
@@ -74,6 +74,7 @@
       letter-spacing: 0.22em;
       gap: 1.2rem;
       font-variation-settings: "wght" 680;
+      z-index: 3;
     }
 
     nav a {
@@ -87,6 +88,44 @@
     nav a:focus-visible {
       color: #fff;
       text-shadow: none;
+    }
+
+    .tempo-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(340px, 32vw);
+      height: 100vh;
+      background: linear-gradient(180deg, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
+      border-left: 1px solid rgba(255,255,255,0.12);
+      z-index: 2;
+      pointer-events: none;
+      mix-blend-mode: lighten;
+      overflow: hidden;
+      padding: 1.5rem 1.25rem;
+    }
+
+    .panel-track {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      animation: drift 40s linear infinite;
+    }
+
+    .panel-track p {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      line-height: 1.8;
+      margin: 0 0 1.5rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    @keyframes drift {
+      0% { transform: translateY(0%); }
+      50% { transform: translateY(-25%); }
+      100% { transform: translateY(0%); }
     }
 
     .sr-only {
@@ -136,7 +175,11 @@
       transform: translate(-50%, -50%);
     }
 
-    @media (max-width: 650px) {
+    @media (max-width: 900px) {
+      .tempo-panel {
+        display: none;
+      }
+
       main {
         justify-content: center;
       }
@@ -151,14 +194,26 @@
 <body>
   <div class="bg" aria-hidden="true"></div>
   <div class="overlay" aria-hidden="true"></div>
+  <div class="tempo-panel" aria-hidden="true">
+    <div class="panel-track">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lacus sed odio dapibus, ut pharetra neque ultrices.</p>
+      <p>Morbi habitasse platea dictumst mauris, pharetra vel augue vitae, pulvinar tincidunt dui. Aliquam aenean fermentum.</p>
+      <p>Curabitur vel finibus ante. Etiam nec velit et lorem posuere hendrerit. Integer nec nunc vitae lorem tempor porttitor.</p>
+      <p>Donec viverra, augue ut gravida vulputate, justo ligula porta lorem, at commodo lectus augue vitae nibh.</p>
+      <p>Sed laoreet posuere tortor, vitae feugiat mi lobortis eget. Vivamus rhoncus ultrices nisl, vitae suscipit orci.</p>
+      <p>Nullam lorem ipsum inceptos himenaeos. Pellentesque habitant morbi tristique senectus et netus et malesuada fames.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor lacus sed odio dapibus, ut pharetra neque ultrices.</p>
+      <p>Morbi habitasse platea dictumst mauris, pharetra vel augue vitae, pulvinar tincidunt dui. Aliquam aenean fermentum.</p>
+    </div>
+  </div>
 
   <main>
     <h1 class="sr-only">Rene Lubov</h1>
     <nav aria-label="Primary">
-      <a href="https://blog.rene.sh/" target="_blank" rel="noopener">• blog</a>
-      <a href="https://x.com/renelubov" target="_blank" rel="noopener">• twitter</a>
-      <a href="https://github.com/renaynay" target="_blank" rel="noopener">* github</a>
-      <a href="https://open.spotify.com/playlist/6nlgD39vLdm77QGAq0zFsS?si=1766fd22e6074334" target="_blank" rel="noopener">* music</a>
+      <a href="https://blog.rene.sh/" target="_blank" rel="noopener">blog</a>
+      <a href="https://x.com/renelubov" target="_blank" rel="noopener">twitter</a>
+      <a href="https://github.com/renaynay" target="_blank" rel="noopener">github</a>
+      <a href="https://open.spotify.com/playlist/6nlgD39vLdm77QGAq0zFsS?si=1766fd22e6074334" target="_blank" rel="noopener">music</a>
     </nav>
   </main>
 
