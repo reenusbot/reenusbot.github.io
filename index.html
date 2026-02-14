@@ -80,21 +80,13 @@
       color: #050505;
       text-decoration: none;
       text-shadow: 0 0 14px var(--halo), 0 0 28px var(--halo);
-      transition: color 0.2s ease, text-shadow 0.2s ease, -webkit-text-stroke 0.2s ease;
-      -webkit-text-stroke: 0;
+      transition: color 0.2s ease, text-shadow 0.2s ease;
     }
 
     nav a:hover,
     nav a:focus-visible {
-      color: transparent;
+      color: #fff;
       text-shadow: none;
-      -webkit-text-stroke: 1.2px #fff;
-    }
-
-    nav a:hover::selection,
-    nav a:focus-visible::selection {
-      background: #fff;
-      color: #000;
     }
 
     .sr-only {
