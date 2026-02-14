@@ -23,6 +23,11 @@
       box-sizing: border-box;
     }
 
+    ::selection {
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -30,11 +35,9 @@
       color: #fff;
       overflow: hidden;
       cursor: none;
-      transition: background 0.5s ease;
     }
 
     .bg,
-    .bg-sharp,
     .overlay {
       position: fixed;
       inset: 0;
@@ -43,33 +46,18 @@
     }
 
     .bg {
-      filter: blur(12px) saturate(0.7);
-      transform: scale(1.05);
-      transition: filter 0.45s ease;
-    }
-
-    .bg-sharp {
-      opacity: 0;
-      transition: opacity 0.45s ease;
-      filter: none;
-    }
-
-    body.reveal .bg {
-      filter: blur(0px) saturate(1);
-    }
-
-    body.reveal .bg-sharp {
-      opacity: 1;
+      filter: blur(6px) saturate(0.85);
+      transform: scale(1.02);
     }
 
     .overlay {
-      background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 35%, rgba(0, 0, 0, 0.75) 75%, rgba(0, 0, 0, 0.95) 100%);
+      background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 35%, rgba(0, 0, 0, 0.7) 75%, rgba(0, 0, 0, 0.95) 100%);
       pointer-events: none;
     }
 
     main {
       position: relative;
-      z-index: 3;
+      z-index: 2;
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -103,13 +91,21 @@
       color: #050505;
       text-decoration: none;
       text-shadow: 0 0 14px var(--halo), 0 0 28px var(--halo);
-      transition: color 0.2s ease, text-shadow 0.2s ease;
+      transition: color 0.2s ease, text-shadow 0.2s ease, -webkit-text-stroke 0.2s ease;
+      -webkit-text-stroke: 0;
     }
 
     nav a:hover,
     nav a:focus-visible {
-      color: #fff;
+      color: transparent;
       text-shadow: none;
+      -webkit-text-stroke: 1.2px #fff;
+    }
+
+    nav a:hover::selection,
+    nav a:focus-visible::selection {
+      background: #fff;
+      color: #000;
     }
 
     .sr-only {
@@ -175,7 +171,6 @@
 </head>
 <body>
   <div class="bg" aria-hidden="true"></div>
-  <div class="bg-sharp" aria-hidden="true"></div>
   <div class="overlay" aria-hidden="true"></div>
 
   <main>
@@ -196,26 +191,9 @@
 
   <script>
     const cursor = document.querySelector('.cursor-block');
-    const body = document.body;
-    let center = { x: window.innerWidth / 2, y: window.innerHeight * 0.45 };
-    let radius = Math.min(window.innerWidth, window.innerHeight) / 4;
-
     document.addEventListener('mousemove', (event) => {
       cursor.style.left = event.clientX + 'px';
       cursor.style.top = event.clientY + 'px';
-      const dx = event.clientX - center.x;
-      const dy = event.clientY - center.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      if (distance <= radius) {
-        body.classList.add('reveal');
-      } else {
-        body.classList.remove('reveal');
-      }
-    });
-
-    window.addEventListener('resize', () => {
-      center = { x: window.innerWidth / 2, y: window.innerHeight * 0.45 };
-      radius = Math.min(window.innerWidth, window.innerHeight) / 4;
     });
   </script>
 </body>
