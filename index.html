@@ -61,30 +61,19 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: clamp(1.5rem, 5vw, 3rem);
+      justify-content: flex-start;
+      padding: clamp(1.5rem, 6vw, 5rem);
     }
 
     nav {
-      width: min(1400px, 100%);
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: flex-start;
       text-transform: uppercase;
       font-size: clamp(1.1rem, 1.8vw, 1.75rem);
       letter-spacing: 0.22em;
-      gap: 2.5rem;
-      font-variation-settings: "wght" 680;
-    }
-
-    .nav-group {
-      display: flex;
-      flex-direction: column;
       gap: 1.2rem;
-    }
-
-    .nav-group.right {
-      align-items: flex-end;
+      font-variation-settings: "wght" 680;
     }
 
     nav a {
@@ -156,15 +145,13 @@
     }
 
     @media (max-width: 650px) {
-      nav {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 1.5rem;
+      main {
+        justify-content: center;
       }
 
-      .nav-group.right {
+      nav {
         align-items: center;
+        text-align: center;
       }
     }
   </style>
@@ -176,14 +163,10 @@
   <main>
     <h1 class="sr-only">Rene Lubov</h1>
     <nav aria-label="Primary">
-      <div class="nav-group left">
-        <a href="https://blog.rene.sh/" target="_blank" rel="noopener">• blog</a>
-        <a href="https://x.com/renelubov" target="_blank" rel="noopener">• twitter</a>
-      </div>
-      <div class="nav-group right">
-        <a href="https://github.com/renaynay" target="_blank" rel="noopener">* github</a>
-        <a href="https://open.spotify.com/playlist/6nlgD39vLdm77QGAq0zFsS?si=1766fd22e6074334" target="_blank" rel="noopener">* music</a>
-      </div>
+      <a href="https://blog.rene.sh/" target="_blank" rel="noopener">• blog</a>
+      <a href="https://x.com/renelubov" target="_blank" rel="noopener">• twitter</a>
+      <a href="https://github.com/renaynay" target="_blank" rel="noopener">* github</a>
+      <a href="https://open.spotify.com/playlist/6nlgD39vLdm77QGAq0zFsS?si=1766fd22e6074334" target="_blank" rel="noopener">* music</a>
     </nav>
   </main>
 
