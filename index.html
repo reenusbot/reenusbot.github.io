@@ -30,6 +30,7 @@
       color: #fff;
       overflow: hidden;
       cursor: none;
+      transition: background 0.5s ease;
     }
 
     .bg,
@@ -44,38 +45,26 @@
     .bg {
       filter: blur(12px) saturate(0.7);
       transform: scale(1.05);
-      transition: filter 0.55s ease;
+      transition: filter 0.45s ease;
     }
 
     .bg-sharp {
       opacity: 0;
-      transition: opacity 0.55s ease;
+      transition: opacity 0.45s ease;
       filter: none;
+    }
+
+    body.reveal .bg {
+      filter: blur(0px) saturate(1);
+    }
+
+    body.reveal .bg-sharp {
+      opacity: 1;
     }
 
     .overlay {
       background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 35%, rgba(0, 0, 0, 0.75) 75%, rgba(0, 0, 0, 0.95) 100%);
       pointer-events: none;
-    }
-
-    .nose-zone {
-      position: fixed;
-      width: clamp(180px, 22vw, 280px);
-      height: clamp(180px, 22vw, 280px);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -35%);
-      z-index: 2;
-    }
-
-    .nose-zone:hover ~ .bg-sharp,
-    .nose-zone:focus-visible ~ .bg-sharp {
-      opacity: 1;
-    }
-
-    .nose-zone:hover ~ .bg,
-    .nose-zone:focus-visible ~ .bg {
-      filter: blur(0px) saturate(1);
     }
 
     main {
@@ -181,16 +170,10 @@
       .nav-group.right {
         align-items: center;
       }
-
-      .nose-zone {
-        width: 150px;
-        height: 150px;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="nose-zone" aria-hidden="true"></div>
   <div class="bg" aria-hidden="true"></div>
   <div class="bg-sharp" aria-hidden="true"></div>
   <div class="overlay" aria-hidden="true"></div>
@@ -213,23 +196,26 @@
 
   <script>
     const cursor = document.querySelector('.cursor-block');
-    const noseZone = document.querySelector('.nose-zone');
-    const bg = document.querySelector('.bg');
-    const bgSharp = document.querySelector('.bg-sharp');
+    const body = document.body;
+    let center = { x: window.innerWidth / 2, y: window.innerHeight * 0.45 };
+    let radius = Math.min(window.innerWidth, window.innerHeight) / 4;
 
     document.addEventListener('mousemove', (event) => {
       cursor.style.left = event.clientX + 'px';
       cursor.style.top = event.clientY + 'px';
+      const dx = event.clientX - center.x;
+      const dy = event.clientY - center.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance <= radius) {
+        body.classList.add('reveal');
+      } else {
+        body.classList.remove('reveal');
+      }
     });
 
-    noseZone.addEventListener('mouseenter', () => {
-      bgSharp.style.opacity = '1';
-      bg.style.filter = 'blur(0px) saturate(1)';
-    });
-
-    noseZone.addEventListener('mouseleave', () => {
-      bgSharp.style.opacity = '0';
-      bg.style.filter = 'blur(12px) saturate(0.7)';
+    window.addEventListener('resize', () => {
+      center = { x: window.innerWidth / 2, y: window.innerHeight * 0.45 };
+      radius = Math.min(window.innerWidth, window.innerHeight) / 4;
     });
   </script>
 </body>
