@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rene Lubov</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: linear-gradient(135deg,
+        #ff5f6d,
+        #ffc371,
+        #ffe27a,
+        #7ee8fa,
+        #80ff72,
+        #a17fe0,
+        #f76b1c);
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --card-bg-dark: rgba(12, 12, 16, 0.75);
+      --text: #141414;
+      --text-dark: #f5f5ff;
+      --accent: #ff9f1c;
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background-image: var(--bg);
+      background-size: 400% 400%;
+      animation: flow 25s ease infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1.5rem, 4vw, 3rem);
+    }
+
+    main {
+      width: min(900px, 100%);
+      background: color-mix(in srgb, white 75%, transparent);
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+      padding: clamp(2rem, 6vw, 3rem);
+      box-shadow: 0 20px 60px rgba(14, 14, 30, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      color: var(--text);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      main {
+        background: linear-gradient(135deg, rgba(18, 18, 30, 0.92), rgba(30, 30, 50, 0.85));
+        color: var(--text-dark);
+        border-color: rgba(255,255,255,0.2);
+      }
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .avatar-placeholder {
+      width: clamp(120px, 22vw, 180px);
+      height: clamp(120px, 22vw, 180px);
+      border-radius: 32px;
+      border: 4px dashed rgba(255, 255, 255, 0.8);
+      display: grid;
+      place-items: center;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      line-height: 1.1;
+    }
+
+    .tagline {
+      font-size: clamp(1.1rem, 3vw, 1.4rem);
+      max-width: 32ch;
+      color: rgba(15, 15, 35, 0.8);
+    }
+
+    section {
+      margin-top: 2.5rem;
+    }
+
+    section h2 {
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      margin-bottom: 1rem;
+    }
+
+    .about {
+      font-size: 1.03rem;
+      line-height: 1.7;
+      color: rgba(15, 15, 35, 0.82);
+    }
+
+    .links {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .links li a {
+      padding: 0.9rem 1.3rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 15px 25px rgba(15, 15, 35, 0.15);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .links li a:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 35px rgba(15, 15, 35, 0.25);
+    }
+
+    .links li a:focus-visible {
+      outline: 3px solid rgba(255, 255, 255, 0.7);
+      outline-offset: 3px;
+    }
+
+    @keyframes flow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="avatar-placeholder">Your Photo</div>
+      <div>
+        <h1>Rene Lubov</h1>
+        <p class="tagline">Creative technologist with a taste for bold colors, crisp builds, and zero fluff.</p>
+      </div>
+    </header>
+
+    <section aria-labelledby="about">
+      <h2 id="about">About Me</h2>
+      <p class="about">
+        I’m Rene — tinkerer, builder, and unapologetic fan of minimal setups with maximal energy. This site is my corner of the internet to share what I’m working on, what I’m curious about, and who I’m collaborating with. Photo goes up soon; in the meantime, enjoy the rainbow.
+      </p>
+    </section>
+
+    <section aria-labelledby="links">
+      <h2 id="links">Elsewhere</h2>
+      <ul class="links">
+        <li><a href="https://github.com/renelubov" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/renelubov" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="mailto:hi@renelubov.com">Email</a></li>
+        <li><a href="https://writing.renelubov.com" target="_blank" rel="noopener">Writing</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
