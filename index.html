@@ -42,30 +42,30 @@
     }
 
     .bg {
-      filter: blur(10px) saturate(0.75);
-      transform: scale(1.04);
-      transition: filter 0.6s ease;
+      filter: blur(12px) saturate(0.7);
+      transform: scale(1.05);
+      transition: filter 0.55s ease;
     }
 
     .bg-sharp {
-      filter: none;
       opacity: 0;
-      transition: opacity 0.6s ease;
+      transition: opacity 0.55s ease;
+      filter: none;
     }
 
     .overlay {
-      background: radial-gradient(circle at center, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.75) 80%, rgba(0, 0, 0, 0.95) 100%);
+      background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 35%, rgba(0, 0, 0, 0.75) 75%, rgba(0, 0, 0, 0.95) 100%);
       pointer-events: none;
     }
 
     .nose-zone {
       position: fixed;
-      width: clamp(180px, 20vw, 260px);
-      height: clamp(180px, 20vw, 260px);
+      width: clamp(180px, 22vw, 280px);
+      height: clamp(180px, 22vw, 280px);
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -30%);
-      z-index: 1;
+      transform: translate(-50%, -35%);
+      z-index: 2;
     }
 
     .nose-zone:hover ~ .bg-sharp,
@@ -80,7 +80,7 @@
 
     main {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -94,16 +94,16 @@
       justify-content: space-between;
       align-items: flex-start;
       text-transform: uppercase;
-      font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+      font-size: clamp(1.1rem, 1.8vw, 1.75rem);
       letter-spacing: 0.22em;
       gap: 2.5rem;
-      font-variation-settings: "wght" 650;
+      font-variation-settings: "wght" 680;
     }
 
     .nav-group {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.2rem;
     }
 
     .nav-group.right {
@@ -113,7 +113,7 @@
     nav a {
       color: #050505;
       text-decoration: none;
-      text-shadow: 0 0 12px var(--halo), 0 0 24px var(--halo);
+      text-shadow: 0 0 14px var(--halo), 0 0 28px var(--halo);
       transition: color 0.2s ease, text-shadow 0.2s ease;
     }
 
@@ -134,19 +134,40 @@
       border: 0;
     }
 
-    .cursor-word {
+    .cursor-block {
       position: fixed;
-      top: 0;
-      left: 0;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #fff;
+      background: #000;
+      box-shadow: 0 0 4px rgba(255, 255, 255, 0.65);
       transform: translate(-50%, -50%);
       pointer-events: none;
-      z-index: 3;
-      color: #fff;
-      font-size: 1rem;
-      font-variation-settings: "wght" 600;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      mix-blend-mode: difference;
+      z-index: 5;
+      image-rendering: pixelated;
+    }
+
+    .cursor-crosshair::before,
+    .cursor-crosshair::after {
+      content: "";
+      position: absolute;
+      background: #fff;
+    }
+
+    .cursor-crosshair::before {
+      width: 2px;
+      height: 26px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .cursor-crosshair::after {
+      width: 26px;
+      height: 2px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
 
     @media (max-width: 650px) {
@@ -162,8 +183,8 @@
       }
 
       .nose-zone {
-        width: 140px;
-        height: 140px;
+        width: 150px;
+        height: 150px;
       }
     }
   </style>
@@ -178,22 +199,37 @@
     <h1 class="sr-only">Rene Lubov</h1>
     <nav aria-label="Primary">
       <div class="nav-group left">
-        <a href="https://writing.renelubov.com" target="_blank" rel="noopener">• blog</a>
-        <a href="https://twitter.com/renelubov" target="_blank" rel="noopener">• twitter</a>
+        <a href="https://blog.rene.sh/" target="_blank" rel="noopener">• blog</a>
+        <a href="https://x.com/renelubov" target="_blank" rel="noopener">• twitter</a>
       </div>
       <div class="nav-group right">
-        <a href="https://github.com/renelubov" target="_blank" rel="noopener">* github</a>
-        <a href="https://open.spotify.com/user/renelubov" target="_blank" rel="noopener">* music</a>
+        <a href="https://github.com/renaynay" target="_blank" rel="noopener">* github</a>
+        <a href="https://open.spotify.com/playlist/6nlgD39vLdm77QGAq0zFsS?si=1766fd22e6074334" target="_blank" rel="noopener">* music</a>
       </div>
     </nav>
   </main>
 
-  <div class="cursor-word" aria-hidden="true">cursor</div>
+  <div class="cursor-block cursor-crosshair" aria-hidden="true"></div>
 
   <script>
-    const cursor = document.querySelector('.cursor-word');
+    const cursor = document.querySelector('.cursor-block');
+    const noseZone = document.querySelector('.nose-zone');
+    const bg = document.querySelector('.bg');
+    const bgSharp = document.querySelector('.bg-sharp');
+
     document.addEventListener('mousemove', (event) => {
-      cursor.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`;
+      cursor.style.left = event.clientX + 'px';
+      cursor.style.top = event.clientY + 'px';
+    });
+
+    noseZone.addEventListener('mouseenter', () => {
+      bgSharp.style.opacity = '1';
+      bg.style.filter = 'blur(0px) saturate(1)';
+    });
+
+    noseZone.addEventListener('mouseleave', () => {
+      bgSharp.style.opacity = '0';
+      bg.style.filter = 'blur(12px) saturate(0.7)';
     });
   </script>
 </body>
