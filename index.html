@@ -4,23 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rene Lubov</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      color-scheme: light dark;
-      --bg: linear-gradient(135deg,
-        #ff5f6d,
-        #ffc371,
-        #ffe27a,
-        #7ee8fa,
-        #80ff72,
-        #a17fe0,
-        #f76b1c);
-      --card-bg: rgba(255, 255, 255, 0.75);
-      --card-bg-dark: rgba(12, 12, 16, 0.75);
-      --text: #141414;
-      --text-dark: #f5f5ff;
-      --accent: #ff9f1c;
-      font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color-scheme: dark;
+      --bg-blur: rgba(0, 0, 0, 0.45);
+      --bg-solid: rgba(0, 0, 0, 0.8);
+      --highlight: #8aff66;
+      --secondary: rgba(255, 255, 255, 0.78);
+      --border: rgba(255, 255, 255, 0.32);
+      font-family: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0.02em;
     }
 
     * {
@@ -31,150 +27,223 @@
 
     body {
       min-height: 100vh;
-      background-image: var(--bg);
-      background-size: 400% 400%;
-      animation: flow 25s ease infinite;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: clamp(1.5rem, 4vw, 3rem);
+      background: #000 url("portrait.jpg") center center / cover no-repeat fixed;
+      color: #f7f7f7;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(130deg, rgba(0, 0, 0, 0.9) 20%, rgba(0, 0, 0, 0.25) 60%, rgba(0, 0, 0, 0.9) 100%);
+      backdrop-filter: blur(6px);
+      z-index: 0;
     }
 
     main {
-      width: min(900px, 100%);
-      background: color-mix(in srgb, white 75%, transparent);
-      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
-      backdrop-filter: blur(14px);
-      border-radius: 28px;
-      padding: clamp(2rem, 6vw, 3rem);
-      box-shadow: 0 20px 60px rgba(14, 14, 30, 0.35);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      color: var(--text);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      main {
-        background: linear-gradient(135deg, rgba(18, 18, 30, 0.92), rgba(30, 30, 50, 0.85));
-        color: var(--text-dark);
-        border-color: rgba(255,255,255,0.2);
-      }
-    }
-
-    header {
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
+      justify-content: space-between;
+      min-height: 100vh;
+      padding: clamp(1rem, 4vw, 2.5rem) clamp(1.5rem, 6vw, 4rem);
+      gap: 2rem;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
       align-items: flex-start;
+      gap: 1rem;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      font-weight: 500;
     }
 
-    .avatar {
-      width: clamp(140px, 25vw, 220px);
-      aspect-ratio: 4 / 5;
-      border-radius: 32px;
-      border: 4px solid rgba(255, 255, 255, 0.8);
-      overflow: hidden;
-      box-shadow: 0 18px 35px rgba(10, 10, 30, 0.35);
+    nav span,
+    nav a {
+      color: var(--secondary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease;
     }
 
-    .avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: contrast(1.05) saturate(0.85);
+    nav a:hover,
+    nav a:focus-visible {
+      border-bottom-color: #fff;
     }
 
-    h1 {
-      font-size: clamp(2.2rem, 6vw, 3.5rem);
-      line-height: 1.1;
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: clamp(1.2rem, 3vw, 2.5rem);
+      align-items: end;
     }
 
-    .tagline {
-      font-size: clamp(1.1rem, 3vw, 1.4rem);
-      max-width: 32ch;
-      color: rgba(15, 15, 35, 0.8);
+    .hero h1 {
+      font-size: clamp(3rem, 9vw, 6rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
-    section {
-      margin-top: 2.5rem;
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      line-height: 1.6;
+      max-width: 38ch;
+      background: var(--bg-blur);
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(8px);
     }
 
-    section h2 {
-      font-size: clamp(1.3rem, 3vw, 1.8rem);
-      margin-bottom: 1rem;
+    .hero .tag {
+      display: inline-block;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      color: var(--secondary);
     }
 
-    .about {
-      font-size: 1.03rem;
-      line-height: 1.7;
-      color: rgba(15, 15, 35, 0.82);
+    .hero p strong {
+      color: var(--highlight);
+      font-weight: 600;
+    }
+
+    .meta-table {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 0;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+    }
+
+    .meta-table div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .meta-table span:last-child {
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+      color: #fff;
     }
 
     .links {
-      list-style: none;
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1rem;
+      gap: 0.75rem;
+      list-style: none;
+      text-transform: uppercase;
+      font-size: 0.9rem;
     }
 
-    .links li a {
-      padding: 0.9rem 1.3rem;
-      border-radius: 999px;
+    .links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1rem;
+      border: 1px solid var(--border);
+      background: var(--bg-blur);
+      color: #fff;
       text-decoration: none;
-      font-weight: 600;
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 15px 25px rgba(15, 15, 35, 0.15);
-      transition: transform 180ms ease, box-shadow 180ms ease;
+      transition: border-color 0.2s ease, transform 0.2s ease;
     }
 
-    .links li a:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 35px rgba(15, 15, 35, 0.25);
+    .links a:hover,
+    .links a:focus-visible {
+      border-color: var(--highlight);
+      transform: translateY(-2px);
     }
 
-    .links li a:focus-visible {
-      outline: 3px solid rgba(255, 255, 255, 0.7);
-      outline-offset: 3px;
+    footer {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      color: var(--secondary);
     }
 
-    @keyframes flow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    footer .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    footer .status::before {
+      content: "●";
+      font-size: 0.6rem;
+      color: var(--highlight);
+    }
+
+    @media (max-width: 640px) {
+      nav {
+        flex-direction: column;
+      }
+
+      .hero h1 {
+        font-size: 2.8rem;
+      }
     }
   </style>
 </head>
 <body>
   <main>
-    <header>
-      <figure class="avatar">
-        <img src="portrait.jpg" alt="Portrait of Rene Lubov" loading="lazy" />
-      </figure>
-      <div>
-        <h1>Rene Lubov</h1>
-        <p class="tagline">Creative technologist with a taste for bold colors, crisp builds, and zero fluff.</p>
-      </div>
-    </header>
+    <nav>
+      <span>Rene Lubov — personal index</span>
+      <span><a href="mailto:hi@renelubov.com">hi@renelubov.com</a></span>
+    </nav>
 
-    <section aria-labelledby="about">
-      <h2 id="about">About Me</h2>
-      <p class="about">
-        I’m Rene — tinkerer, builder, and unapologetic fan of minimal setups with maximal energy. This site is my corner of the internet to share what I’m working on, what I’m curious about, and who I’m collaborating with. If you want to collaborate, start with the links below.
+    <section class="hero" aria-labelledby="intro">
+      <div>
+        <p class="tag">CURRENT WORK</p>
+        <h1 id="intro">Proto-forward technologist building bold tools + communities.</h1>
+      </div>
+      <p>
+        I prototype brands, systems, and internet-native products for people who like their infrastructure lean and their aesthetics loud. <strong>Hands-on, collaborative, and allergic to bloat.</strong>
       </p>
     </section>
 
-    <section aria-labelledby="links">
-      <h2 id="links">Elsewhere</h2>
+    <section class="meta-table" aria-label="details">
+      <div>
+        <span>Base</span>
+        <span>Berlin → Everywhere</span>
+      </div>
+      <div>
+        <span>Focus</span>
+        <span>Creative tech, systems design, studio builds</span>
+      </div>
+      <div>
+        <span>Currently</span>
+        <span>Prototyping independent media + DIY fashion tech</span>
+      </div>
+    </section>
+
+    <section aria-labelledby="navigate">
+      <h2 id="navigate" style="position:absolute;left:-9999px;">Primary links</h2>
       <ul class="links">
-        <li><a href="https://github.com/renelubov" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://www.linkedin.com/in/renelubov" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="mailto:hi@renelubov.com">Email</a></li>
-        <li><a href="https://writing.renelubov.com" target="_blank" rel="noopener">Writing</a></li>
+        <li><a href="https://github.com/renelubov" target="_blank" rel="noopener">GitHub ↗</a></li>
+        <li><a href="https://www.linkedin.com/in/renelubov" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+        <li><a href="https://writing.renelubov.com" target="_blank" rel="noopener">Writing ↗</a></li>
+        <li><a href="https://proto-types.ch/" target="_blank" rel="noopener">Proto inspiration ↗</a></li>
       </ul>
     </section>
+
+    <footer>
+      <div class="status">Available for select collaborations Q2 2026</div>
+      <div>Signal / Telegram @renelubov — Code + content living at github.com/renelubov</div>
+    </footer>
   </main>
 </body>
 </html>
