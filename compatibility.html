@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compatibility — Rene Lubov</title>
+  <style>
+    @font-face {
+      font-family: "NeueHaasGroteskTextMono55Roman";
+      src: url("https://dune.com/_next/static/media/NeueHaasGroteskTextMono_55Roman-s.p.a190ce11.woff2") format("woff2");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      color-scheme: dark;
+      font-family: "NeueHaasGroteskTextMono55Roman", "IBM Plex Mono", "Space Mono", "SFMono-Regular", monospace;
+      --line: rgba(255, 255, 255, 0.2);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #000;
+      color: #fff;
+      padding: clamp(1rem, 4vw, 2.5rem);
+      line-height: 1.45;
+    }
+
+    .wrap {
+      width: min(900px, 100%);
+      margin: 0 auto;
+      border: 1px solid var(--line);
+      padding: clamp(1rem, 3vw, 2rem);
+      backdrop-filter: blur(2px);
+      background: rgba(0, 0, 0, 0.66);
+    }
+
+    nav {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.9rem;
+    }
+
+    a { color: #fff; }
+
+    h1 {
+      margin: 0 0 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+    }
+
+    p.meta {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.95rem;
+    }
+
+    form {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .q {
+      border: 1px solid var(--line);
+      padding: 0.9rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.45rem;
+      font-size: 0.95rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,0.35);
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      padding: 0.55rem 0.6rem;
+      font: inherit;
+    }
+
+    textarea { min-height: 90px; resize: vertical; }
+
+    button {
+      appearance: none;
+      border: 1px solid #fff;
+      background: #fff;
+      color: #000;
+      padding: 0.65rem 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      font: inherit;
+      justify-self: start;
+    }
+
+    #status {
+      margin-top: 0.6rem;
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.85);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav aria-label="Primary">
+      <a href="index.html">home</a>
+      <a href="https://blog.rene.sh/" target="_blank" rel="noopener">blog</a>
+      <a href="https://x.com/renelubov" target="_blank" rel="noopener">twitter</a>
+    </nav>
+
+    <h1>Compatibility</h1>
+    <p class="meta">Answer a few questions. Submission opens your Google Form prefilled with these answers.</p>
+
+    <form id="compatibility-form">
+      <div class="q">
+        <label for="name">Your name</label>
+        <input id="name" name="name" required />
+      </div>
+
+      <div class="q">
+        <label for="location">Where are you based?</label>
+        <input id="location" name="location" required />
+      </div>
+
+      <div class="q">
+        <label for="relationship">What are you looking for right now?</label>
+        <select id="relationship" name="relationship" required>
+          <option value="">Choose one</option>
+          <option>Friendship</option>
+          <option>Dating</option>
+          <option>Long-term relationship</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+
+      <div class="q">
+        <label for="values">Top 3 values you care about in a partner</label>
+        <textarea id="values" name="values" required></textarea>
+      </div>
+
+      <div class="q">
+        <label for="weekend">Ideal weekend vibe</label>
+        <textarea id="weekend" name="weekend" required></textarea>
+      </div>
+
+      <div class="q">
+        <label for="dealbreakers">Dealbreakers (be honest)</label>
+        <textarea id="dealbreakers" name="dealbreakers" required></textarea>
+      </div>
+
+      <button type="submit">Continue to Google Form</button>
+      <div id="status" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+
+  <script>
+    // TODO: Replace with your real Google Form prefill link + entry ids.
+    // 1) Open your form > Get pre-filled link.
+    // 2) Fill sample values and copy resulting URL.
+    // 3) Replace formBase + entryMap below.
+    const GOOGLE_FORM_BASE = ""; // e.g. "https://docs.google.com/forms/d/e/FORM_ID/viewform"
+
+    const entryMap = {
+      name: "entry.1111111111",
+      location: "entry.2222222222",
+      relationship: "entry.3333333333",
+      values: "entry.4444444444",
+      weekend: "entry.5555555555",
+      dealbreakers: "entry.6666666666"
+    };
+
+    const form = document.getElementById('compatibility-form');
+    const status = document.getElementById('status');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      if (!GOOGLE_FORM_BASE) {
+        status.textContent = 'Google Form not configured yet. Add your form URL + entry IDs in compatibility.html.';
+        return;
+      }
+
+      const data = new FormData(form);
+      const url = new URL(GOOGLE_FORM_BASE);
+
+      Object.entries(entryMap).forEach(([field, entry]) => {
+        const value = data.get(field);
+        if (value) url.searchParams.set(entry, String(value));
+      });
+
+      status.textContent = 'Opening prefilled Google Form…';
+      window.open(url.toString(), '_blank', 'noopener');
+    });
+  </script>
+</body>
+</html>
